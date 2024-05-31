@@ -12,20 +12,17 @@ class SolicitudView(views.APIView):
 
         try:
             solicitud = Solicitud.objects.get(pk=solicitud_id)
-            print(solicitud_id)
-            print(solicitud)
-            email = solicitud.emailUser 
+            email = solicitud.emailUser
             
             user_response = requests.get(f"{settings.USER_SERVICE_URL}/cliente/{email}/")
             if user_response.status_code != 200:
                 return Response({'error': 'Usuario no encontrado'}, status=status.HTTP_404_NOT_FOUND)
-            print(user_response.json())
-            doc_response = requests.get(f"{settings.DOCUMENT_SERVICE_URL}/documentos/{solicitud_id}/")
-            if doc_response.status_code != 200:
+            
+            doc_response = next((doc for doc in documents if doc['id'] == solicitud_id), None)
+            if not doc_response:
                 return Response({'error': 'Documentos no encontrados para esta solicitud'}, status=status.HTTP_404_NOT_FOUND)
 
-            documentos_data = doc_response.json()
-            documentos = documentos_data.get('documentos', [])
+            documentos = doc_response['documentos']
             
             return Response({
                 'solicitud': SolicitudSerializer(solicitud).data,
@@ -39,3 +36,44 @@ class SolicitudView(views.APIView):
         except Solicitud.DoesNotExist:
             return Response({'error': 'Solicitud no encontrada'}, status=status.HTTP_404_NOT_FOUND)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+documents = [
+    {"id": "1", "documentos": [
+        {"tipo": "PDF", "url": "http://example.com/doc1.pdf", "score": 85},
+        {"tipo": "JPEG", "url": "http://example.com/doc1.jpg", "score": 70}
+    ]},
+    {"id": "2", "documentos": [
+        {"tipo": "DOCX", "url": "http://example.com/doc2.docx", "score": 90},
+        {"tipo": "PNG", "url": "http://example.com/doc2.png", "score": 75}
+    ]}
+]
