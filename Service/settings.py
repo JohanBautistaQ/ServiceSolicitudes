@@ -14,8 +14,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 Aquí se deben de poner las direcciones IP de los microservices log y user
 """
 
-USER_SERVICE_URL = 'http://url_del_servicio_de_usuarios'
-LOG_SERVICE_URL = 'http://url_del_servicio_de_logs'
+USER_SERVICE_URL = 'http://34.133.177.40:8080'
+DOCUMENT_SERVICE_URL = 'http://documento_service/api'
+
 
 from pathlib import Path
 
@@ -32,7 +33,7 @@ SECRET_KEY = 'django-insecure-ej2dgexz#5m547hix54g)u7frj+8-y%0lrfofk_8c+8r(f9!mq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -48,12 +49,6 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.JSONRenderer',
-        'rest_framework.renderers.BrowsableAPIRenderer',
-    )
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -4,4 +4,4 @@ from .models import Solicitud
 class SolicitudSerializer(serializers.ModelSerializer):
     class Meta:
         model = Solicitud
-        fields = ['id', 'estado', 'fecha', 'meta_dato_id']
+        fields = ['id', 'estado', 'fecha','emailUser']

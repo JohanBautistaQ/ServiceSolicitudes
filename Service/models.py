@@ -13,4 +13,4 @@ class Solicitud(models.Model):
 
     estado = models.CharField(max_length=30, choices=ESTADO_CHOICES, default='EN_ESPERA_DOCUMENTOS')
     fecha = models.DateField(auto_now_add=True)
-    meta_dato_id = models.IntegerField() 
+    emailUser = models.EmailField()
